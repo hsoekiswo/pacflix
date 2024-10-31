@@ -23,8 +23,13 @@ class User:
     headers = ["Basic Plan", "Standard Plan", "Premium Plan", "Services"]
 
     def __init__(self, username):
+        """
+        Fungsi ini digunakan untuk menginisialisasi objek User
+
+        input: username (str)
+        """
         self.username = username
-        self.curent_plan = None
+        self.current_plan = None
         self.duration_plan = None
         self.kode_referral = None
 
@@ -32,7 +37,7 @@ class User:
             if value[0] == self.username:
                 self.current_plan = value[1]
                 self.duration_plan = value[2]
-                self.current_plan = value[3]
+                self.kode_referral = value[3]
                 break
 
     def check_all_plan(self):
@@ -44,3 +49,21 @@ class User:
         print("List Benefit and Plan from Pacflix")
         print("")
         print(tabulate(self.list_benefit, self.headers))
+
+    def check_user_plan(self):
+        """
+        Fungsi untuk menampilkan plan dan benefit dari current_plan user
+        """
+
+        if(self.current_plan):
+            print(f"{self.username} sedang berlangganan {self.current_plan}")
+            print("Benefit")
+
+            idx_current_plan = self.list_plan.index(self.current_plan)
+            headers_user = [self.headers[idx_current_plan],self.headers[-1]]
+            benefit_user = [[row[idx_current_plan], row[-1]] for row in self.list_benefit]
+            print(tabulate(benefit_user, headers_user))
+        else:
+            print("anda belum berlangganan")
+
+    
